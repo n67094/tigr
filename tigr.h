@@ -64,6 +64,9 @@ typedef struct Tigr {
 // version of the bitmap while still fitting on the screen. Resizing the window will adapt
 // the scale in integer steps to fit the bitmap.
 //
+// In TIGR_KEEP mode, the window is scaled using TIGR_2X, TIGR_3X, TIGR_4X or 1 by default. When the window is resized,
+// the bitmap is resized to the new window size using integer scaling.
+//
 // In TIGR_AUTO mode, the initial window size is set to the bitmap size times the pixel
 // scale. Resizing the window will resize the bitmap using the specified scale.
 // For example, in forced 2X mode, the window will be twice as wide (and high) as the bitmap.
