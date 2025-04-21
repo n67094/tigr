@@ -5,7 +5,7 @@
 #include "tigr_internal.h"
 #include "tigr_objc.h"
 
-#if __MACOS__
+##if __MACOS__
 
 #include <assert.h>
 #include <limits.h>
@@ -30,7 +30,7 @@
 // this is how they are defined originally
 #include <CoreGraphics/CGBase.h>
 #include <CoreGraphics/CGGeometry.h>
-typedef CGPoint NSPoint;
+    typedef CGPoint NSPoint;
 typedef CGSize NSSize;
 typedef CGRect NSRect;
 
@@ -49,7 +49,7 @@ extern id const NSDefaultRunLoopMode;
 #define NSApplicationActivationPolicyRegular 0
 #endif
 
-bool terminated = false;
+    bool terminated = false;
 
 static uint64_t tigrTimestamp = 0;
 
@@ -274,8 +274,20 @@ Tigr* tigrWindow(int w, int h, const char* title, int flags) {
     // In AUTO mode, window follows requested size, unless downscaled by tigrEnforceScale below.
     int windowScale = 1;
 
-    // In non-AUTO mode, see how big we can make it and still fit on-screen.
-    if ((flags & TIGR_AUTO) == 0) {
+    if (flags & TIGR_KEEP) {
+        // Set the default scale and resize to scale integer multiples when the window is resized.
+
+        if (flags & TIGR_2X) {
+            windowScale = 2;
+        } else if (flags & TIGR_3X) {
+            windowScale = 3;
+        } else if (flags & TIGR_4X) {
+            windowScale = 4;
+        }
+    }
+    if (flags & TIGR_FIXED) {
+        // In non-AUTO mode, see how big we can make it and still fit on-screen.
+
         CGRect mainMonitor = CGDisplayBounds(CGMainDisplayID());
         int maxW = CGRectGetWidth(mainMonitor);
         int maxH = CGRectGetHeight(mainMonitor);
@@ -914,9 +926,8 @@ void tigrUpdate(Tigr* bmp) {
     uint64_t passed = now - tigrTimestamp;
 
     do {
-        event =
-            objc_msgSend_t(id, NSUInteger, id, id, BOOL)(NSApp, sel("nextEventMatchingMask:untilDate:inMode:dequeue:"),
-                                                         eventMask, nil, NSDefaultRunLoopMode, YES);
+        event = objc_msgSend_t(id, NSUInteger, id, id, BOOL)(
+            NSApp, sel("nextEventMatchingMask:untilDate:inMode:dequeue:"), eventMask, nil, NSDefaultRunLoopMode, YES);
 
         if (event != 0) {
             _tigrOnCocoaEvent(event, window);
@@ -1050,5 +1061,5 @@ float tigrTime(void) {
     return (float)elapsed;
 }
 
-#endif // __MACOS__
-#endif // #ifndef TIGR_HEADLESS
+#endif  // __MACOS__
+#endif  // #ifndef TIGR_HEADLESS

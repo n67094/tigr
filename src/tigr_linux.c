@@ -154,7 +154,18 @@ Tigr* tigrWindow(int w, int h, const char* title, int flags) {
 
     if (flags & TIGR_AUTO) {
         // Always use a 1:1 pixel size, unless downscaled by tigrEnforceScale below.
+    } else if (flags & TIGR_KEEP) {
+        // Set the default scale and resize to scale integer multiples when the window is resized.
+
         scale = 1;
+
+        if (flags & TIGR_2X) {
+            scale = 2;
+        } else if (flags & TIGR_3X) {
+            scale = 3;
+        } else if (flags & TIGR_4X) {
+            scale = 4;
+        }
     } else {
         // See how big we can make it and still fit on-screen.
         Screen* screen = DefaultScreenOfDisplay(dpy);
@@ -176,9 +187,9 @@ Tigr* tigrWindow(int w, int h, const char* title, int flags) {
 
     if (flags & TIGR_FULLSCREEN) {
         // https://superuser.com/questions/1680077/does-x11-actually-have-a-native-fullscreen-mode
-        Atom wm_state   = XInternAtom (dpy, "_NET_WM_STATE", true );
-        Atom wm_fullscreen = XInternAtom (dpy, "_NET_WM_STATE_FULLSCREEN", true );
-        XChangeProperty(dpy, xwin, wm_state, XA_ATOM, 32, PropModeReplace, (unsigned char *)&wm_fullscreen, 1);
+        Atom wm_state = XInternAtom(dpy, "_NET_WM_STATE", true);
+        Atom wm_fullscreen = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", true);
+        XChangeProperty(dpy, xwin, wm_state, XA_ATOM, 32, PropModeReplace, (unsigned char*)&wm_fullscreen, 1);
     } else {
         // Wait for window to get mapped
         for (;;) {
@@ -633,4 +644,4 @@ int tigrTouch(Tigr* bmp, TigrTouchPoint* points, int maxPoints) {
 
 #endif  // __linux__ && !__ANDROID__
 
-#endif // #ifndef TIGR_HEADLESS
+#endif  // #ifndef TIGR_HEADLESS

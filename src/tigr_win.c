@@ -9,7 +9,7 @@ TigrInternal* tigrInternal(Tigr* bmp) {
     return (TigrInternal*)(bmp + 1);
 }
 
-#ifdef _WIN32
+##ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <shellapi.h>
@@ -26,7 +26,8 @@ TigrInternal* tigrInternal(Tigr* bmp) {
 #define WIDGET_SCALE 3
 #define WIDGET_FADE 16
 
-int main(int argc, char* argv[]);
+    int
+    main(int argc, char* argv[]);
 
 #ifndef TIGR_DO_NOT_PRESERVE_WINDOW_POSITION
 HKEY tigrRegKey;
@@ -435,6 +436,17 @@ Tigr* tigrWindow(int w, int h, const char* title, int flags) {
     if (flags & TIGR_AUTO) {
         // Always use a 1:1 pixel size.
         scale = 1;
+    } else if (flags & TIGR_KEEP) {
+        // Set the default scale and resize to scale integer multiples when the window is resized.
+        scale = 1;
+
+        if (flags & TIGR_2X) {
+            scale = 2;
+        } else if (flags & TIGR_3X) {
+            scale = 3;
+        } else if (flags & TIGR_4X) {
+            scale = 4;
+        }
     } else {
         // See how big we can make it and still fit on-screen.
         maxW = GetSystemMetrics(SM_CXSCREEN) * 3 / 4;
@@ -787,4 +799,4 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 }
 #endif
 
-#endif // #ifndef TIGR_HEADLESS
+#endif  // #ifndef TIGR_HEADLESS
