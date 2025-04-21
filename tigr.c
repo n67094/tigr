@@ -1944,7 +1944,7 @@ TigrInternal* tigrInternal(Tigr* bmp) {
     return (TigrInternal*)(bmp + 1);
 }
 
-##ifdef _WIN32
+#ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <shellapi.h>
@@ -1961,8 +1961,7 @@ TigrInternal* tigrInternal(Tigr* bmp) {
 #define WIDGET_SCALE 3
 #define WIDGET_FADE 16
 
-    int
-    main(int argc, char* argv[]);
+int main(int argc, char* argv[]);
 
 #ifndef TIGR_DO_NOT_PRESERVE_WINDOW_POSITION
 HKEY tigrRegKey;
@@ -2805,7 +2804,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 //////// End of inlined file: tigr_objc.h ////////
 
 
-##if __MACOS__
+#if __MACOS__
 
 #include <assert.h>
 #include <limits.h>
@@ -2830,7 +2829,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 // this is how they are defined originally
 #include <CoreGraphics/CGBase.h>
 #include <CoreGraphics/CGGeometry.h>
-    typedef CGPoint NSPoint;
+typedef CGPoint NSPoint;
 typedef CGSize NSSize;
 typedef CGRect NSRect;
 
@@ -2849,7 +2848,7 @@ extern id const NSDefaultRunLoopMode;
 #define NSApplicationActivationPolicyRegular 0
 #endif
 
-    bool terminated = false;
+bool terminated = false;
 
 static uint64_t tigrTimestamp = 0;
 

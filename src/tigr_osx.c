@@ -5,7 +5,7 @@
 #include "tigr_internal.h"
 #include "tigr_objc.h"
 
-##if __MACOS__
+#if __MACOS__
 
 #include <assert.h>
 #include <limits.h>
@@ -30,7 +30,7 @@
 // this is how they are defined originally
 #include <CoreGraphics/CGBase.h>
 #include <CoreGraphics/CGGeometry.h>
-    typedef CGPoint NSPoint;
+typedef CGPoint NSPoint;
 typedef CGSize NSSize;
 typedef CGRect NSRect;
 
@@ -49,7 +49,7 @@ extern id const NSDefaultRunLoopMode;
 #define NSApplicationActivationPolicyRegular 0
 #endif
 
-    bool terminated = false;
+bool terminated = false;
 
 static uint64_t tigrTimestamp = 0;
 

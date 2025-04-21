@@ -9,7 +9,7 @@ TigrInternal* tigrInternal(Tigr* bmp) {
     return (TigrInternal*)(bmp + 1);
 }
 
-##ifdef _WIN32
+#ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <shellapi.h>
@@ -26,8 +26,7 @@ TigrInternal* tigrInternal(Tigr* bmp) {
 #define WIDGET_SCALE 3
 #define WIDGET_FADE 16
 
-    int
-    main(int argc, char* argv[]);
+int main(int argc, char* argv[]);
 
 #ifndef TIGR_DO_NOT_PRESERVE_WINDOW_POSITION
 HKEY tigrRegKey;
